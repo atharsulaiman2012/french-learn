@@ -1,0 +1,156 @@
+import streamlit as st
+
+# 1. PAGE CONFIGURATION
+st.set_page_config(
+    page_title="Grade 8 French",
+    page_icon="🇫🇷",
+    layout="centered"
+)
+
+st.title("🇫🇷 Grade 8 French Learning Portal")
+st.write("Welcome! This version includes typing activities to help you practice your French spelling.")
+
+# 2. DROP-DOWN LESSON SELECTOR
+lesson = st.selectbox(
+    "📚 Choose a Lesson:",
+    [
+        "Lesson 1: Greetings & Introductions",
+        "Lesson 2: Numbers & Telling Time",
+        "Lesson 3: Essential Verbs (Les Verbes)",
+        "Lesson 4: School Objects & Classroom Vocabulary",
+        "Lesson 5: Interactive Typing Quiz"
+    ],
+)
+
+st.divider()
+
+# 3. LESSON CONTENT BASED ON DROPDOWN SELECTION
+if lesson == "Lesson 1: Greetings & Introductions":
+    st.subheader("👋 Lesson 1: Se Présenter (Introducing Yourself)")
+    st.write("Learn how to greet people and say your name in French.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**French**")
+        st.write("Comment t'appelles-tu ?")
+        st.write("Je m'appelle...")
+        st.write("Enchanté(e)")
+        st.write("Ça va ?")
+        st.write("Ça va bien, merci !")
+    with col2:
+        st.markdown("**English Translation**")
+        st.write("What is your name?")
+        st.write("My name is...")
+        st.write("Nice to meet you")
+        st.write("How are you?")
+        st.write("I am doing well, thank you!")
+
+elif lesson == "Lesson 2: Numbers & Telling Time":
+    st.subheader("🔢 Lesson 2: Les Nombres et L'heure")
+    st.write("Master your numbers for Grade 8 and learn to ask for the time.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**French**")
+        st.write("Quelle heure est-il ?")
+        st.write("Il est dix heures.")
+        st.write("Un, Deux, Trois")
+        st.write("Quatre, Cinq, Six")
+        st.write("Sept, Huit, Neuf, Dix")
+    with col2:
+        st.markdown("**English Translation**")
+        st.write("What time is it?")
+        st.write("It is 10 o'clock.")
+        st.write("1, 2, 3")
+        st.write("4, 5, 6")
+        st.write("7, 8, 9, 10")
+
+elif lesson == "Lesson 3: Essential Verbs (Les Verbes)":
+    st.subheader("🎯 Lesson 3: Essential Grade 8 Verbs")
+    st.write("Verbs change depending on who is doing the action. Click the tabs below to explore the two most important verbs:")
+    
+    verb_tab1, verb_tab2 = st.tabs(["Être (To Be)", "Avoir (To Have)"])
+    
+    with verb_tab1:
+        st.markdown("#### Conjugation of **Être**")
+        st.write("• **Je suis** (I am)")
+        st.write("• **Tu es** (You are - informal)")
+        st.write("• **Il / Elle est** (He / She is)")
+        st.write("• **Nous sommes** (We are)")
+        st.write("• **Vous êtes** (You are - formal/plural)")
+        st.write("• **Ils / Elles sont** (They are)")
+        
+    with verb_tab2:
+        st.markdown("#### Conjugation of **Avoir**")
+        st.write("• **J'ai** (I have)")
+        st.write("• **Tu as** (You have)")
+        st.write("• **Il / Elle a** (He / She has)")
+        st.write("• **Nous avons** (We have)")
+        st.write("• **Vous avez** (You have - formal/plural)")
+        st.write("• **Ils / Elles ont** (They have)")
+
+elif lesson == "Lesson 4: School Objects & Classroom Vocabulary":
+    st.subheader("🎒 Lesson 4: Dans le sac à dos (In the backpack)")
+    st.write("Learn the words for common items you use every day in school.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**French**")
+        st.write("Le stylo")
+        st.write("Le cahier")
+        st.write("La règle")
+        st.write("Le crayon")
+        st.write("Le sac à dos")
+    with col2:
+        st.markdown("**English Translation**")
+        st.write("The pen")
+        st.write("The notebook")
+        st.write("The ruler")
+        st.write("The pencil")
+        st.write("The backpack")
+
+elif lesson == "Lesson 5: Interactive Typing Quiz":
+    st.subheader("📝 Lesson 5: Spelling & Conjugation Challenge")
+    st.write("Type the correct French phrase below to test your memory. Pay close attention to your spelling!")
+    
+    # Typed quiz question
+    student_quiz_input = st.text_input("How do you write **'I am'** in French?")
+    
+    if st.button("Check Quiz Answer"):
+        # .strip().lower() makes sure it accepts "je suis ", "Je suis", or "je suis"
+        if student_quiz_input.strip().lower() == "je suis":
+            st.success("🎉 Magnifique! 'Je suis' is completely correct!")
+        elif student_quiz_input == "":
+            st.warning("Please type an answer before checking.")
+        else:
+            st.error("❌ Not quite! Remember to check Lesson 3 for the verb 'Être'. Try again!")
+
+st.divider()
+
+# 4. TYPED TRANSLATOR (STAYS FIXED AT THE BOTTOM)
+st.subheader("🔤 Searchable English to French Dictionary")
+st.write("Type an English word below and press Enter to find its French counterpart.")
+
+# Dictionary database
+dictionary = {
+    "book": "Le livre",
+    "friend": "L'ami (m) / L'amie (f)",
+    "goodbye": "Au revoir",
+    "hello": "Bonjour",
+    "please": "S'il vous plaît",
+    "school": "L'école",
+    "teacher": "Le professeur",
+    "thank you": "Merci",
+}
+
+# Text Input box for the student to type in
+user_search = st.text_input("Type an English word (Try: hello, school, thank you, book):")
+
+# Processing what the student typed
+if user_search:
+    clean_search = user_search.strip().lower()
+    
+    if clean_search in dictionary:
+        st.success(f"**French Translation:** {dictionary[clean_search]}")
+    else:
+        st.info("🔍 Word not found in our mini-dictionary. Try typing 'hello', 'school', or 'book'!")
